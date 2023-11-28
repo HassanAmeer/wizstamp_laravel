@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 
 //////////////////////////////////////////////////////////////////////////
-/////////// for clear cache
+/////////// for clear cache 
 Route::get('/clear/cache', function () {
     $run = Artisan::call('config:clear');
     $run = Artisan::call('cache:clear');
