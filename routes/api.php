@@ -14,9 +14,14 @@ use App\Http\Controllers\api\wizUsersApiController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+/////////////////////// api routes start ///////////////////////
 
 Route::get('/users', [wizUsersApiController::class , 'getWizUsersApiF']);
+
+
+
+
+
