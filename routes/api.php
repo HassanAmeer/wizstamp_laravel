@@ -17,7 +17,7 @@ use App\Http\Controllers\api\wizUsersApiController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-/////////////////////// api routes start ///////////////////////
+//////////////////////////////// API routes start /////////////////////////////////////
 
 Route::get('/users', [wizUsersApiController::class , 'getWizUsersApiF']);
 
