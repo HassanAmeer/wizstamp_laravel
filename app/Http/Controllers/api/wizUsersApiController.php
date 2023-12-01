@@ -23,6 +23,41 @@ class wizUsersApiController extends Controller
             ], 404);
         }
     }
+
+    /////////////// loginf
+    public function loginWizUsersApiF(Request $request){
+       $email = $request->email;
+       $validator = Validator::make($request->all(), [
+        'email' => 'required',
+        'password' => 'required',
+       ]);
+        if($validator->fails()){
+            return response()->json([
+                "status" => false,
+                "required fields for Login" => [
+                'email','password'
+                ],
+                "Message" => "2 Field Required",
+            ], 404);
+        }else{
+            $existingUserEmail = wizUsersModel::where('email', $request->email)->first();
+            $existingUserPass = wizUsersModel::where('password', $request->password)->first();
+            if ($existingUserEmail && $existingUserPass) {
+                return response()->json([
+                    "status" => true,
+                    "Message" => "You Are Login",
+                ], 200);
+            } else {
+                return response()->json([
+                    "status" => false,
+                    "Message" => "Please Enter Correct Data",
+                ], 404);
+            }
+        }
+    }
+
+
+
     public function ResetPasswordF (Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required',

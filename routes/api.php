@@ -35,6 +35,7 @@ Route::get('/users', [wizUsersApiController::class , 'getWizUsersApiF']);
 
 // => post Api
 Route::post('/addDocs', [allStampDocsApiController::class , 'AddDocF']);
+Route::post('/login', [wizUsersApiController::class , 'loginWizUsersApiF']);
 Route::post('/signup', [wizUsersApiController::class , 'SignUpWizUsersApiF']);
 Route::post('/reset', [wizUsersApiController::class , 'ResetPasswordF']);
 // Route::post('/addelectronics', [electronicsApiController::class , 'addElectronicsF']);
