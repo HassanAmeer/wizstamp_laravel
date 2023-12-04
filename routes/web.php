@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\adminAuthController;
+use App\Http\Controllers\api\wizUsersApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,11 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::get('/', className::class, 'functionName');
+////////// for admin panel start
+Route::get('/wizostamp/login',  [adminAuthController::class, 'getLoginPageF'] );
+Route::post('/wizostamp/login', [adminAuthController::class, 'adminLoginF'])->name('loginpost');;
+////////// for admin panel end
+
 
 
 
