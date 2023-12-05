@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <!-- Required meta tags -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title> Admin - Update Profile </title>
+  <title> Admin - Update Users </title>
 
   <link rel="stylesheet" href="{{ asset('css/admin_css/maincss.css') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -22,10 +22,10 @@
 </head>
 <style>
    .maincolor {
-    color: #5e080b !important;
+    color: #3D3A3A !important;
 }
    .maincoloropacity1 {
-    color: #8A0B0F57 !important;
+    color: #EBEEF0important;
 }
    .maincoloropacity {
     color: #5E080B5B !important;
@@ -141,7 +141,7 @@
 <div class="pl-4" style="display: flex;
     flex-direction: row;
     justify-content: space-between;">
-<h2 style="color: black; align-self:center; font-weight:700;"> Update Profile </h2>
+<h2 style="color: black; align-self:center;"> Update User </h2>
 <div id="imageContainer" style="width:10rem;">
      <div id="editIcondiv"><i class="fas fa-pen" id="editIcon" > </i></div>
      

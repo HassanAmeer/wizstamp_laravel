@@ -245,7 +245,7 @@ label span {
         <input type="submit" value="Sign in" class="btn1">
       </form>
         <!-- <a href="#" class="dnthave">Don’t have an account? Sign up</a> -->
-  </div> 
+    </div> 
        <div class="footer">
       <span> Got To __ <i class="fas fa-tag pulse"> </i> <a href="#"><a href="#"> Website </a></span>
     </div>

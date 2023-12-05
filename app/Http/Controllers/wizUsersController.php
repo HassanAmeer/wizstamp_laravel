@@ -4,23 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\wizUsersModel;
+use App\Models\adminAuthModel;
 use App\Http\Controllers\Controller;
 
 class wizUsersController extends Controller
 {
     public function getWizUsersF(){
         $wizusers = wizUsersModel::orderBy('id', 'desc')->get();
-        if($wizusers->count() > 0){
-            return response()->json([
-                "status" => true,
-                "data" => $wizusers,
-            ], 200);
-        }else{
-            return response()->json([
-                "status" => false,
-                "Message" => "Users Records is Empty",
-            ], 404);
+        $admintable = adminAuthModel::get();
+        if ($admintable->isNotEmpty()) {
+            $adminprofile = $admintable->first()->image;
+        } else {
+            $adminprofile = null;
         }
+        if(!$wizusers->count() > 0){
+            $wizusers = $wizusers;
+        }
+        return view('admin/users/vusers', compact(['adminprofile','wizusers']));
+    }
+    ///////////// delete user by id
+    public function deleteUsersF($id){
+        // dd($id);
+
+        $check = wizUsersModel::find($id);
+        $wizusers = wizUsersModel::orderBy('id', 'desc')->get();
+        $admintable = adminAuthModel::get();
+        if ($admintable->isNotEmpty()) {
+            $adminprofile = $admintable->first()->image;
+        } else {
+            $adminprofile = null;
+        }
+        if(!$wizusers->count() > 0){
+            $wizusers = $wizusers;
+        }
+
+        if($check){
+            $check->delete();
+        }
+        return redirect('wizostamp/vusers')->with(['adminprofile' => $adminprofile, 'wizusers' => $wizusers])->with('greentoast', 'User is Deleted.');
     }
 }
 

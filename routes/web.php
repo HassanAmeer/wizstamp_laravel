@@ -2,8 +2,26 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\allStampController;
+use App\Http\Controllers\wizUsersController;
 use App\Http\Controllers\adminAuthController;
 use App\Http\Controllers\api\wizUsersApiController;
+
+
+use Illuminate\Support\Facades\Response;
+use App\Models\allStampDocsModel;
+
+Route::get('/download-pdf/{filename}', function ($filename) {
+    $path = storage_path('app/docs/' . $filename);
+
+    // Check if the file exists
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    // Return the file with the correct headers
+    return Response::download($path, 'downloaded_file.pdf', ['Content-Type' => 'application/pdf']);
+})->name('download.pdf');
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +38,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 ////////// for admin panel start
+Route::post('/wizostamp/login', [adminAuthController::class, 'adminLoginF'])->name('loginpost');
+Route::post('/wizostamp/editprofile', [adminAuthController::class, 'adminprofileUpdateF'])->name('editadminprofile');
+Route::get('/wizostamp/adminprofile', [adminAuthController::class, 'adminprofileF'])->name('adminprofile');
+Route::get('/wizostamp/home',  [adminAuthController::class, 'gotothomeF'] );
+Route::get('/wizostamp/logout',  [adminAuthController::class, 'getLoginPageF'] );
 Route::get('/wizostamp/login',  [adminAuthController::class, 'getLoginPageF'] );
-Route::post('/wizostamp/login', [adminAuthController::class, 'adminLoginF'])->name('loginpost');;
+Route::get('/wizostamp/stamps', [allStampController::class, 'getAllStampsF'])->name('vstamps');
+Route::get('/wizostamp/vusers', [wizUsersController::class, 'getWizUsersF'])->name('vusers');
+Route::get('/wizostamp/dusers/{id}', [wizUsersController::class, 'deleteUsersF'])->name('/wizostamp/dusers');
 ////////// for admin panel end
-
 
 
 

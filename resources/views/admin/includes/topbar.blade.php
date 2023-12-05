@@ -3,8 +3,8 @@
 
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-      <a class="navbar-brand brand-logo mr-5" href="<?php echo route('altis16/home'); ?>"><img src="{{ asset('assets/adminassets/logo.png') }}" class="mr-2" alt="logo"></a>
-      <a class="navbar-brand brand-logo-mini" style="border-radius:20%; background-color:rgba(179, 77, 77, 0.177);;" href="<?php echo route('altis16/home'); ?>"><img src="{{ asset('assets/adminassets/logo.png') }}" style="width:80%; padding:5%;" alt="logo"></a>
+      <a class="navbar-brand brand-logo mr-5" href="<?php echo url('wizostamp/home'); ?>"><img src="{{ asset('icons/logo.png') }}" class="mr-2" alt="logo"></a>
+      <a class="navbar-brand brand-logo-mini" style="border-radius:20%; background-color:rgba(179, 77, 77, 0.177);;" href="<?php echo url('wizostamp/home'); ?>"><img src="{{ asset('icons/logo.png') }}" style="width:80%; padding:5%;" alt="logo"></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
       <button class="navbar-toggler navbar-toggler align-self-center" style="box-shadow: none;" type="button" data-toggle="minimize">
@@ -71,12 +71,10 @@
             </a>
           </div>
         </li>
-        <?php $checkauth = Session::get('auth_data_ses');
-        if ($checkauth) { $adminprofilevar = $checkauth['profile']; } ?>
+        
         <li class="nav-item nav-profile dropdown">
-          <a class="nav-link dropdown-toggle" href="{{route('altis16/viewprofile')}}">
-            <img src="{{asset($adminprofilevar)}}" alt="profile">
-            <!-- <img src="{{ asset('assets/adminassets/adminprofile.png') }}" alt="profile"> -->
+          <a class="nav-link dropdown-toggle" href="{{url('/wizostamp/adminprofile')}}">
+            <img src="{{asset($adminprofile)}}" alt="profile">
           </a>
         </li>
       </ul>
