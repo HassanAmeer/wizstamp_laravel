@@ -135,7 +135,7 @@
   pphone
   ppasword -->
 
-<form class="row g-3 pl-4" action="{{ route('editadminprofile') }}" method="POST" enctype="multipart/form-data"> 
+<form class="row g-3 pl-4" action="{{ route('/wizostamp/edituser') }}" method="POST" enctype="multipart/form-data"> 
   @csrf
   
 <div class="pl-4" style="display: flex;
@@ -147,21 +147,21 @@
      
     <img id="selectedImage" src="{{asset($image)}}" alt="Profile Image">
 </div>
-<input type="file" class="form-control-file" name="pimage" id="imageInput" accept="image/*" style="display: none;">
+<input type="file" class="form-control-file" name="profile" id="imageInput" accept="image/*" style="display: none;">
 </div>
 
-  <input type="hidden" name="pid" value="{{$id}}" id="">
+  <input type="hidden" name="id" value="{{$id}}" id="">
   <div class="col-md-6">
     <label for="inputName" class="form-label"> Name </label>
-    <input type="text" name="pname" value="{{$name}}" class="form-control" id="inputName">
+    <input type="text" name="name" value="{{$name}}" class="form-control" id="inputName">
   </div>
   <div class="col-md-6">
     <label for="inputEmail" class="form-label"> Email </label>
-    <input type="email" name="pemail" class="form-control" value="{{$email}}" id="inputEmail">
+    <input type="email" name="email" class="form-control" value="{{$email}}" id="inputEmail">
   </div>
   <div class="col-md-6">
     <label for="inputPassword" class="form-label"> Password </label>
-    <input type="text" name="ppassword" placeholder="Change Password" class="form-control" id="inputPassword">
+    <input type="text" name="password" placeholder="Change Password" class="form-control" id="inputPassword">
   </div>
  
   <div class="col-12">

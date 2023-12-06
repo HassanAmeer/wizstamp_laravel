@@ -15,6 +15,7 @@
    </div>
 </div>
 
+<!-- <h1> included toast </h1> -->
 <div id="notification-toastred"  style="position: fixed; z-index: 100; bottom: 3%; right: 4%;" class="toast align-items-center text-bg-warning border-0" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true" data-delay="3000" style="margin-left:7%;">
    <div class="d-flex">
        <div class="toast-body">

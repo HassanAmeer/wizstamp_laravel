@@ -129,8 +129,6 @@ class adminAuthController extends Controller
             } else {
                 $adminprofile = null;
             }
-
         return redirect('wizostamp/adminprofile')->with('greentoast', 'Profile Is Updated.');
-      
     }
 }

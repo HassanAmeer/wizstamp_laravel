@@ -1,7 +1,7 @@
 
 
 
-<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
       <a class="navbar-brand brand-logo mr-5" href="<?php echo url('wizostamp/home'); ?>"><img src="{{ asset('icons/logo.png') }}" class="mr-2" alt="logo"></a>
       <a class="navbar-brand brand-logo-mini" style="border-radius:20%; background-color:rgba(179, 77, 77, 0.177);;" href="<?php echo url('wizostamp/home'); ?>"><img src="{{ asset('icons/logo.png') }}" style="width:80%; padding:5%;" alt="logo"></a>
@@ -25,7 +25,7 @@
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item dropdown">
           <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="" data-toggle="dropdown">
-            <i class="fa fa-bell mx-0" style="color: #cc4f54;"></i>
+            <i class="fa fa-bell mx-0" style="color: silver;"></i>
             <span class="count"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">

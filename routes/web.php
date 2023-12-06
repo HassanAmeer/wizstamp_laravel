@@ -1,15 +1,16 @@
 <?php
 
+use App\Models\allStampDocsModel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\allStampController;
 use App\Http\Controllers\wizUsersController;
+
+
 use App\Http\Controllers\adminAuthController;
 use App\Http\Controllers\api\wizUsersApiController;
-
-
-use Illuminate\Support\Facades\Response;
-use App\Models\allStampDocsModel;
+use App\Http\Controllers\clients\HomePageController;
 
 Route::get('/download-pdf/{filename}', function ($filename) {
     $path = storage_path('app/docs/' . $filename);
@@ -34,9 +35,9 @@ Route::get('/download-pdf/{filename}', function ($filename) {
 |
 */
 //////////////////////////////////////////////////////////////////////////
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 ////////// for admin panel start
 Route::post('/wizostamp/login', [adminAuthController::class, 'adminLoginF'])->name('loginpost');
 Route::post('/wizostamp/editprofile', [adminAuthController::class, 'adminprofileUpdateF'])->name('editadminprofile');
@@ -47,8 +48,15 @@ Route::get('/wizostamp/login',  [adminAuthController::class, 'getLoginPageF'] );
 Route::get('/wizostamp/stamps', [allStampController::class, 'getAllStampsF'])->name('vstamps');
 Route::get('/wizostamp/vusers', [wizUsersController::class, 'getWizUsersF'])->name('vusers');
 Route::get('/wizostamp/dusers/{id}', [wizUsersController::class, 'deleteUsersF'])->name('/wizostamp/dusers');
+Route::post('/wizostamp/edituser', [wizUsersController::class, 'editUserF'])->name('/wizostamp/edituser');
+Route::get('/wizostamp/vedituserpage/{id}', [wizUsersController::class, 'veditUserPageF'])->name('/wizostamp/vedituserpage');
 ////////// for admin panel end
 
+///////////////////////////// for users home page start
+Route::get('/', [HomePageController::class, 'gotohomepageF'])->name('/');
+Route::get('/home', [HomePageController::class, 'gotohomepageF'])->name('/home');
+Route::post('/login', [HomePageController::class, 'userLoginF'])->name('/login');
+///////////////////////////// for users home page end
 
 
 //////////////////////////////////////////////////////////////////////////

@@ -103,14 +103,8 @@
       <td scope="row" style="background-color: #DCFFD3CB; padingleft:0.2rem; padding-right:0.2rem;"> {{$key['name']}} </td>
       <td>{{$key['phone']}}</td>
       <td>{{$key['email']}}</td>
-      <td><a class="btn btn-warning" href="{{ url('admin/user.viewedit', [
-        'userid' => $key['id'],
-        'userprofile' => $key['image'],
-        'username' => $key['name'],
-        'userphone' => $key['phone'],
-        'useremail' => $key['email'],
-        ]); }}"> <i class="fa fa-edit"></i> </a>   
-
+      <td><a class="btn btn-warning" href="{{ route('/wizostamp/vedituserpage', [
+        'id' => $key['id']]); }}"> <i class="fa fa-edit"></i> </a>   
     </td>
       <td><a class="btn btn-danger" href="<?php echo route('/wizostamp/dusers', ['id' => $key['id']]) ?>"> <i class="fa fa-trash-alt"></i> </a></td>
     </tr> 
