@@ -99,7 +99,7 @@
     @foreach ($wizusers as $key)
     <tr>
       <th scope="row">{{$key['id']}}</th>
-      <td><img src="{{asset($key['image'])}}" alt="" srcset="{{asset('icons/profile.png')}}" style="width:2.5rem"></td>
+      <td><img src="{{asset($key['image'])}}" alt="" style="width:2.5rem"></td>
       <td scope="row" style="background-color: #DCFFD3CB; padingleft:0.2rem; padding-right:0.2rem;"> {{$key['name']}} </td>
       <td>{{$key['phone']}}</td>
       <td>{{$key['email']}}</td>

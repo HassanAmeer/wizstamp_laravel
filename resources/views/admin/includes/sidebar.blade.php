@@ -58,7 +58,7 @@
       </li>
        <!-- ControlSettings here -->
        <li class="nav-item">
-        <a class="nav-link" href="<?php echo url('admin/viewcontrstngs'); ?>">
+        <a class="nav-link" href="<?php echo url('/wizostamp/settings'); ?>">
           <i class="fa fa-sliders-h menu-icon"></i>
           <span class="menu-title">Settings</span>
         </a>

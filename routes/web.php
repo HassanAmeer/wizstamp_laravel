@@ -5,9 +5,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\allStampController;
+use App\Http\Controllers\settingsController;
+
+
 use App\Http\Controllers\wizUsersController;
-
-
 use App\Http\Controllers\adminAuthController;
 use App\Http\Controllers\api\wizUsersApiController;
 use App\Http\Controllers\clients\HomePageController;
@@ -46,16 +47,23 @@ Route::get('/wizostamp/home',  [adminAuthController::class, 'gotothomeF'] );
 Route::get('/wizostamp/logout',  [adminAuthController::class, 'getLoginPageF'] );
 Route::get('/wizostamp/login',  [adminAuthController::class, 'getLoginPageF'] );
 Route::get('/wizostamp/stamps', [allStampController::class, 'getAllStampsF'])->name('vstamps');
+Route::get('/wizostamp/veditstamps{id}', [allStampController::class, 'veditstampPageF'])->name('/wizostamp/veditstamps');
 Route::get('/wizostamp/vusers', [wizUsersController::class, 'getWizUsersF'])->name('vusers');
 Route::get('/wizostamp/dusers/{id}', [wizUsersController::class, 'deleteUsersF'])->name('/wizostamp/dusers');
 Route::post('/wizostamp/edituser', [wizUsersController::class, 'editUserF'])->name('/wizostamp/edituser');
 Route::get('/wizostamp/vedituserpage/{id}', [wizUsersController::class, 'veditUserPageF'])->name('/wizostamp/vedituserpage');
+Route::get('/wizostamp/settings', [settingsController::class, 'vSettingsF'])->name('/wizostamp/settings');
+////////// for admin panel end
 ////////// for admin panel end
 
 ///////////////////////////// for users home page start
 Route::get('/', [HomePageController::class, 'gotohomepageF'])->name('/');
 Route::get('/home', [HomePageController::class, 'gotohomepageF'])->name('/home');
+Route::get('/login', [HomePageController::class, 'gotohomepageF'])->name('/login');
 Route::post('/login', [HomePageController::class, 'userLoginF'])->name('/login');
+Route::get('/logout', [HomePageController::class, 'userLogoutF'])->name('/logout');
+
+Route::get('/docs/{filename}', [HomePageController::class, 'showPdf'])->name('show.pdf');
 ///////////////////////////// for users home page end
 
 

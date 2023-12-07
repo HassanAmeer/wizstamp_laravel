@@ -22,4 +22,18 @@ class allStampController extends Controller
         }
         return view('admin/stamps/vstamps', compact(['adminprofile','stampstable']));
     }
+    public function veditstampPageF($id){
+        $check = allStampDocsModel::find($id);
+        $admintable = adminAuthModel::get();
+        if ($admintable->isNotEmpty()) {
+            $adminprofile = $admintable->first()->image;
+        } else {
+            $adminprofile = null;
+        }
+        $id = $check->id;
+        $name = $check->name;
+        $email = $check->email;
+        $image = $check->image;
+        return view('admin/stamps/editstamp', compact(['adminprofile','id','name','image','email']));
+    }
 }

@@ -5,11 +5,18 @@ namespace App\Http\Controllers\clients;
 use Illuminate\Http\Request;
 use App\Models\wizUsersModel;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+
 
 class HomePageController extends Controller
 {
     public function gotohomepageF() {
+     return view('clients/homepage');
+    }
+
+    public function userLogoutF() {
+     session()->forget(['status', 'user_data']);
      return view('clients/homepage');
     }
 
@@ -29,7 +36,7 @@ class HomePageController extends Controller
                 ->first();
 
             if ($existingUser) {
-                session(['status' => 'login', 'user_id' => $existingUser->id, 'user_name'=>$existingUser->name]);
+                session(['status' => 'login', 'user_data' => $existingUser]);
                 return redirect('/home')->with('greentoast', 'Successfully Logged In.');
             } else {
                 return redirect('/home')->with('redtoast', 'Incorrect Email or Password.');
@@ -37,4 +44,7 @@ class HomePageController extends Controller
         }
     }
     ///////////// for users login end
+
+
+
 }

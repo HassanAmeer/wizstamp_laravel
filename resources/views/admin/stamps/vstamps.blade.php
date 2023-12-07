@@ -115,6 +115,7 @@
           <th scope="col">Buyer Name</th>
           <th scope="col">Buyer Submit time</th>
           <th scope="col">Created At</th>
+          <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
       </thead>
@@ -142,8 +143,7 @@
    </a> -->
 
 
-    <a href="#" target="_blank" download="{{$key['seller_doc']}}">
-
+    <a target="_blank" href="{{url($key['seller_doc'])}}">
       <div style="background-color:#5E080B17; border-radius:8px;">
           <div class="dropdown-brands" data-id="" style="display:flex; flex-direction:row; justify-content:space-between; align-items:center; gap:5px;">
               <img style="max-width:3rem; min-width:1.5rem; border-radius:5px; border: 2px solid #d3a6a6; box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);" src="{{asset('icons/pdf.png')}}">
@@ -152,11 +152,9 @@
       </div>
     </a>
 
-
-
           </td>
           @if($key['islocked'] == true || $key['islocked'] == 1)
-          <td><img style="max-width:3rem; min-width:2rem; border-radius:5px; border: 1px solid black; box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);padding:0.1rem;" src="{{asset('icons/pdf2.png')}}"></td>
+          <td><a target="_blank" href="{{url($key['seller_doc'])}}"><img style="max-width:3rem; min-width:2rem; border-radius:5px; border: 1px solid black; box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);padding:0.1rem;" src="{{asset('icons/pdf2.png')}}"></a></td>
           @else
           <td><img style="max-width:3rem; min-width:2rem; border-radius:5px; border: 1px solid orange; box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);padding:0.1rem;" src="{{asset('icons/pending.png')}}"></td>
           @endif
@@ -170,6 +168,7 @@
           <td><?php echo $key['buyer_name']; ?></td>
           <td><?php echo $key['buyer_submit_time']; ?></td>
           <td><?php echo $key['created_at']; ?></td>
+          <td><a class="btn btn-warning" href="<?php echo route("/wizostamp/veditstamps", ['id' => $key['id']]) ?>"> <i class="fa fa-edit"></i> </a></td>
           <td><a class="btn btn-danger" href="<?php echo url('admin/stamp.delete', ['id' => $key['id']]) ?>"> <i class="fa fa-trash-alt"></i> </a></td>
         </tr>
         @endforeach
