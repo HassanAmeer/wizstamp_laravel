@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2023 at 02:29 PM
+-- Generation Time: Dec 11, 2023 at 07:00 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `wizstamp_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) DEFAULT 'icons/profile.png',
+  `name` varchar(255) DEFAULT 'name1',
+  `email` varchar(255) DEFAULT 'email@gmail.com',
+  `password` varchar(255) DEFAULT '1234',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `image`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'icons/1701785279.png', 'admin', 'admin@gmail.com', '1234', '2023-12-04 07:17:19', '2023-12-05 09:07:59');
 
 -- --------------------------------------------------------
 
@@ -135,7 +158,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (10, '2023_11_30_063349_realestate_stamps', 4),
 (11, '2023_11_30_063533_vehicle_stamps', 5),
 (12, '2023_11_30_063636_electronics_stamps', 5),
-(13, '2023_11_30_063937_wizallusers', 6);
+(13, '2023_11_30_063937_wizallusers', 6),
+(14, '2023_12_04_102951_admin_auth', 7),
+(15, '2023_12_07_140853_settings_migrations', 8);
 
 -- --------------------------------------------------------
 
@@ -203,6 +228,19 @@ CREATE TABLE `real_estate_stamps_tabel` (
   `buyer_cnic` varchar(255) DEFAULT '000000000',
   `buyer_address` varchar(255) DEFAULT 'Address ABC',
   `buyer_signature` varchar(255) DEFAULT 'notfound.png',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `doc_expire_time` varchar(255) DEFAULT '4444/01/01',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -285,11 +323,17 @@ CREATE TABLE `wizallusers` (
 --
 
 INSERT INTO `wizallusers` (`id`, `name`, `phone`, `email`, `city`, `address`, `image`, `password`, `created_at`, `updated_at`) VALUES
-(4, 'webseowiz', '03012345678', 'webseowiz9@gmail.com', 'city', 'address', 'icons/profile.png', '12345', '2023-11-30 06:29:48', '2023-11-30 06:29:48');
+(4, 'webseowiz', NULL, 'webseowiz9@gmail.com', 'city', 'address', 'icons/1701951400.png', '1234', '2023-11-30 06:29:48', '2023-12-07 07:16:40');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `all_stamps_docs`
@@ -337,6 +381,12 @@ ALTER TABLE `real_estate_stamps_tabel`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -360,6 +410,12 @@ ALTER TABLE `wizallusers`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `all_stamps_docs`
 --
 ALTER TABLE `all_stamps_docs`
@@ -381,7 +437,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -393,6 +449,12 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `real_estate_stamps_tabel`
 --
 ALTER TABLE `real_estate_stamps_tabel`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -411,7 +473,7 @@ ALTER TABLE `vehicle_stamps_tabel`
 -- AUTO_INCREMENT for table `wizallusers`
 --
 ALTER TABLE `wizallusers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

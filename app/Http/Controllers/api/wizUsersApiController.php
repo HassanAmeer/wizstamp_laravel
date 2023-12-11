@@ -155,8 +155,57 @@ class wizUsersApiController extends Controller
                }
         } 
     }
+    ///////// update profile
+    public function updateProfileApiF(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            // 'name' => 'required',
+            // 'phone' => 'required',
+            // 'email' => 'required',
+            // 'password' => 'required',
+            // 'brandimg' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+       ]);
+      if($validator->fails()){
+       // return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json([
+                "status" => false,
+                "required fields For Update Profile" => [
+                   'user_id',
+                   'name',
+                   'email',
+                   'phone',
+                // 'password',
+                ],
+                "Message" => "Required All Fields",
+            ], 404);
+      }else{
+
+       $check = wizUsersModel::fiind($request->user_id);
+
+       if($check){
+        $check->update([
+            'name' => $request->name,
+           'email' => $request->email,
+           'phone' => $request->phone,
+           'password' => $request->password,
+        ]);
+       }
+       if($check){
+        return response()->json([
+            "status" => true,
+            "Message" => "Profile Is Updated",
+        ], 200);
+           }else{
+            return response()->json([
+                "status" => false,
+                "Message" => "Profile can not be updated",
+            ], 404);
+           }
+               }
+        } 
+    }
     
-}
+
 
 
 ///// app password for smtp by 2 step verification

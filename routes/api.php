@@ -38,6 +38,7 @@ Route::post('/addDocs', [allStampDocsApiController::class , 'AddDocF']);
 Route::post('/login', [wizUsersApiController::class , 'loginWizUsersApiF']);
 Route::post('/signup', [wizUsersApiController::class , 'SignUpWizUsersApiF']);
 Route::post('/reset', [wizUsersApiController::class , 'ResetPasswordF']);
+Route::post('/updateprofile', [wizUsersApiController::class , 'updateProfileApiF']);
 // Route::post('/addelectronics', [electronicsApiController::class , 'addElectronicsF']);
 
 
