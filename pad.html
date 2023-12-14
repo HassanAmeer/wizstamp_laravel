@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Pad on Image</title>
+    <style>
+        #signature-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        #user-image {
+            max-width: 100%;
+            max-height: 500px;
+        }
+
+        #signature-pad {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid #ccc;
+            cursor: crosshair;
+        }
+
+        #saved-image {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            border: 1px solid #ccc;
+            width: 100px;
+            height: 50px;
+        }
+
+        #download-button {
+            margin-top: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/signature_pad@1.5.3/signature-pad.css">
+</head>
+
+<body>
+    <h2>Signature Pad on Image</h2>
+    <div id="signature-container">
+        <img id="user-image" alt="User Image">
+        <canvas id="signature-pad"></canvas>
+        <button onclick="showSignature()">Show Signature</button>
+        <button onclick="clearSignature()">Clear</button>
+        <button onclick="convertToImage()">Convert to Image</button>
+        <button onclick="saveAsImage()">Save as Image</button>
+
+        <!-- Add a download button -->
+        <button id="download-button" onclick="downloadImage()">Download Image</button>
+    </div>
+
+    <canvas id="saved-image"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@1.5.3/signature_pad.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const userImage = document.getElementById('user-image');
+            const canvas = document.getElementById('signature-pad');
+            const signaturePad = new SignaturePad(canvas);
+            const savedImageCanvas = document.getElementById('saved-image');
+            const savedImageCtx = savedImageCanvas.getContext('2d');
+
+            function resizeSignaturePad() {
+                // Set the size of the signature pad to match the user image
+                canvas.width = userImage.width;
+                canvas.height = userImage.height;
+
+                // Update the signature pad
+                signaturePad.clear();
+                signaturePad.fromDataURL(savedImageCanvas.toDataURL());
+            }
+
+            function drawSignatureOnImage() {
+                savedImageCtx.clearRect(0, 0, savedImageCanvas.width, savedImageCanvas.height);
+
+                // Draw the user-uploaded image
+                savedImageCtx.drawImage(userImage, 0, 0, savedImageCanvas.width, savedImageCanvas.height);
+
+                // Draw the signature on top of the image
+                savedImageCtx.globalAlpha = 1;
+                savedImageCtx.drawImage(canvas, 0, 0, savedImageCanvas.width, savedImageCanvas.height);
+
+                savedImageCtx.globalAlpha = 1;
+            }
+
+            window.showSignature = function () {
+                drawSignatureOnImage();
+            };
+
+            window.clearSignature = function () {
+                signaturePad.clear();
+            };
+
+            window.convertToImage = function () {
+                drawSignatureOnImage();
+            };
+
+            function downloadImage() {
+                // Check if the signature pad is not empty
+                if (!signaturePad.isEmpty()) {
+                    const dataUrl = savedImageCanvas.toDataURL('image/png');
+                    const a = document.createElement('a');
+                    a.href = dataUrl;
+                    a.download = 'signature_image.png';
+                    a.click();
+                } else {
+                    alert('Please draw a signature before downloading.');
+                }
+            }
+
+            // For demonstration purposes, load a sample image
+            userImage.src = 'https://via.placeholder.com/500'; // Replace with your image path
+
+            // Ensure the signature pad is resized when the user image is loaded
+            userImage.onload = function () {
+                resizeSignaturePad();
+            };
+        });
+    </script>
+</body>
+
+</html>

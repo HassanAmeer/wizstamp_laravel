@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class HomePageController extends Controller
 {
+    public function gotohomeF() {
+     return view('clients/home');
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////
     public function gotohomepageF() {
      return view('clients/homepage');
     }
@@ -44,7 +49,4 @@ class HomePageController extends Controller
         }
     }
     ///////////// for users login end
-
-
-
 }

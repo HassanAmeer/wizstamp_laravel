@@ -54,14 +54,20 @@ Route::post('/wizostamp/edituser', [wizUsersController::class, 'editUserF'])->na
 Route::get('/wizostamp/vedituserpage/{id}', [wizUsersController::class, 'veditUserPageF'])->name('/wizostamp/vedituserpage');
 Route::get('/wizostamp/settings', [settingsController::class, 'vSettingsF'])->name('/wizostamp/settings');
 ////////// for admin panel end
-////////// for admin panel end
 
-///////////////////////////// for users home page start
-Route::get('/', [HomePageController::class, 'gotohomepageF'])->name('/');
-Route::get('/home', [HomePageController::class, 'gotohomepageF'])->name('/home');
-Route::get('/login', [HomePageController::class, 'gotohomepageF'])->name('/login');
-Route::post('/login', [HomePageController::class, 'userLoginF'])->name('/login');
-Route::get('/logout', [HomePageController::class, 'userLogoutF'])->name('/logout');
+//////////////////////////////////////////////////////////
+// with login
+// ///////////////////////////// for users home page start
+// Route::get('/', [HomePageController::class, 'gotohomepageF'])->name('/');
+// Route::get('/home', [HomePageController::class, 'gotohomepageF'])->name('/home');
+// Route::get('/login', [HomePageController::class, 'gotohomepageF'])->name('/login');
+// Route::post('/login', [HomePageController::class, 'userLoginF'])->name('/login');
+// Route::get('/logout', [HomePageController::class, 'userLogoutF'])->name('/logout');
+//////////////////////////////////////////////////////////
+// without login
+Route::get('/', [HomePageController::class, 'gotohomeF'])->name('/');
+Route::get('/home', [HomePageController::class, 'gotohomeF'])->name('/home');
+//////////////////////////////////////////////////////////
 
 Route::get('/docs/{filename}', [HomePageController::class, 'showPdf'])->name('show.pdf');
 ///////////////////////////// for users home page end

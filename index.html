@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #imageSection {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #imageList {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .image {
+            flex: 0 0 auto;
+            width: 100vw;
+            height: 100vh;
+            scroll-snap-align: start;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const imageList = document.getElementById("imageList");
+            const images = document.querySelectorAll(".image");
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        startImageAnimation();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            observer.observe(document.getElementById("imageSection"));
+
+            function startImageAnimation() {
+                let index = 0;
+                const interval = setInterval(() => {
+                    images[index].scrollIntoView({ behavior: "smooth", block: "start" });
+                    index++;
+                    if (index === images.length) {
+                        clearInterval(interval);
+                        // Allow scrolling to the next section
+                        imageList.style.overflowY = "auto";
+                    }
+                }, 2000); // Adjust the interval as needed
+            }
+
+            let scrollDirection = 0;
+
+            document.addEventListener("wheel", (event) => {
+                scrollDirection = event.deltaY;
+            });
+
+            window.addEventListener("scroll", () => {
+                if (scrollDirection > 0 && isScrolledToBottom()) {
+                    scrollToNextSection();
+                } else if (scrollDirection < 0 && isScrolledToTop()) {
+                    scrollToPreviousSection();
+                }
+            });
+
+            function isScrolledToBottom() {
+                return window.innerHeight + window.scrollY >= document.body.offsetHeight;
+            }
+
+            function isScrolledToTop() {
+                return window.scrollY === 0;
+            }
+
+            function scrollToNextSection() {
+                document.querySelector("section:nth-of-type(3)").scrollIntoView({ behavior: "smooth" });
+            }
+
+            function scrollToPreviousSection() {
+                document.querySelector("section:nth-of-type(1)").scrollIntoView({ behavior: "smooth" });
+            }
+        });
+    </script>
+</head>
+
+<body>
+
+    <section>
+        <h1>Section 1</h1>
+        <p>Description for Section 1</p>
+    </section>
+
+    <section id="imageSection">
+        <h1>Section 2</h1>
+        <div id="imageList">
+            <img class="image" src="1.jpg" alt="Image 1">
+            <img class="image" src="2.png" alt="Image 2">
+            <img class="image" src="3.jpg" alt="Image 3">
+            <img class="image" src="4.jpg" alt="Image 4">
+            <img class="image" src="5.jpg" alt="Image 5">
+            <img class="image" src="6.jpg" alt="Image 6">
+            <!-- Add more images as needed -->
+        </div>
+    </section>
+
+    <section>
+        <h1>Section 3</h1>
+        <!-- Content for Section 3 -->
+    </section>
+
+</body>
+
+</html>

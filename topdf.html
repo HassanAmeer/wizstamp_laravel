@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to PDF Converter</title>
+</head>
+
+<body>
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="convertImageToPdf()">Convert to PDF</button>
+
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.js"></script>
+    <script>
+        async function convertImageToPdf() {
+            const imageInput = document.getElementById('imageInput');
+            const imageFile = imageInput.files[0];
+
+            if (!imageFile) {
+                alert('Please select an image file.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(imageFile);
+
+            reader.onload = async () => {
+                const imageBytes = new Uint8Array(reader.result);
+                const pdfDoc = await PDFLib.PDFDocument.create();
+                const page = pdfDoc.addPage();
+
+                const image = await pdfDoc.embedPng(imageBytes);
+                const { width, height } = image.scale(0.7);
+
+                page.drawImage(image, {
+                    x: 0,
+                    y: 588 - height,
+                    width: 600,
+                    height: 850,
+                });
+
+                const pdfBytes = await pdfDoc.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+                // Create a link element and trigger a download
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'output.pdf';
+
+                // Append the link to the document, trigger a click, and remove the link
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+
+            reader.onerror = () => {
+                alert('Error reading the image file.');
+            };
+        }
+    </script>
+</body>
+
+</html>

@@ -180,7 +180,7 @@ class wizUsersApiController extends Controller
             ], 404);
       }else{
 
-       $check = wizUsersModel::fiind($request->user_id);
+       $check = wizUsersModel::find($request->user_id);
 
        if($check){
         $check->update([
@@ -198,7 +198,7 @@ class wizUsersApiController extends Controller
            }else{
             return response()->json([
                 "status" => false,
-                "Message" => "Profile can not be updated",
+                "Message" => "Check User Id and Others. Profile can not be updated",
             ], 404);
            }
                }

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Pad</title>
+    <style>
+        #signature-pad {
+            border: 1px solid #ccc;
+            width: 300px;
+            height: 150px;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Signature Pad</h2>
+    <canvas id="signature-pad"></canvas>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('signature-pad');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseleave', stopDrawing);
+
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#000';
+
+                ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+<!-- ////////////////////////// -->
+
+
+<!-- with save image of drawing signature start -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Pad</title>
+    <style>
+        #signature-pad {
+            border: 1px solid #ccc;
+            width: 300px;
+            height: 150px;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Signature Pad</h2>
+    <canvas id="signature-pad"></canvas>
+    <button onclick="showSignature()">Show Signature</button>
+
+    <img id="result-image" style="display: none;" alt="Result Image">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('signature-pad');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseleave', stopDrawing);
+
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#000';
+
+                ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+
+            window.showSignature = function () {
+                const resultCanvas = document.getElementById('result-image');
+                resultCanvas.style.display = 'block';
+                resultCanvas.src = canvas.toDataURL();
+            };
+        });
+    </script>
+</body>
+
+</html>
+<!-- with save image of drawing signature end -->
+
+<!-- draw signature on choosed image and show the results start -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Pad</title>
+    <style>
+        #signature-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        #signature-pad {
+            border: 1px solid #ccc;
+            cursor: crosshair;
+        }
+
+        #result-image {
+            display: none;
+        }
+
+        #saved-image {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            border: 1px solid #ccc;
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Signature Pad</h2>
+    <div id="signature-container">
+        <input type="file" id="image-upload" accept="image/*">
+        <canvas id="signature-pad"></canvas>
+        <button onclick="showSignature()">Show Signature</button>
+    </div>
+
+    <img id="result-image" alt="Result Image">
+    <canvas id="saved-image"></canvas>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('signature-pad');
+            const ctx = canvas.getContext('2d');
+            const resultImage = document.getElementById('result-image');
+            const savedImageCanvas = document.getElementById('saved-image');
+            const savedImageCtx = savedImageCanvas.getContext('2d');
+            const imageUpload = document.getElementById('image-upload');
+            let isDrawing = false;
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseleave', stopDrawing);
+
+            imageUpload.addEventListener('change', handleImageUpload);
+
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#000';
+
+                ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+
+            function handleImageUpload() {
+                const file = imageUpload.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const img = new Image();
+                        img.onload = function () {
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            ctx.drawImage(img, 0, 0);
+                        };
+                        img.src = e.target.result;
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            window.showSignature = function () {
+                resultImage.src = canvas.toDataURL();
+                resultImage.style.display = 'block';
+
+                // Save the signature image to another canvas
+                savedImageCanvas.width = canvas.width;
+                savedImageCanvas.height = canvas.height;
+                savedImageCtx.drawImage(canvas, 0, 0);
+            };
+        });
+    </script>
+</body>
+
+</html>
+
+
+<!-- draw signature on choosed image and show the results end -->
+
+<!-- draw on image and download in pdf start -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Pad</title>
+    <style>
+        #signature-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        #signature-pad {
+            border: 1px solid #ccc;
+            cursor: crosshair;
+        }
+
+        #result-image {
+            display: none;
+        }
+
+        #saved-image {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            border: 1px solid #ccc;
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/signature_pad@1.5.3/signature-pad.css">
+</head>
+
+<body>
+    <h2>Signature Pad</h2>
+    <div id="signature-container">
+        <input type="file" id="image-upload" accept="image/*">
+        <canvas id="signature-pad"></canvas>
+        <button onclick="showSignature()">Show Signature</button>
+        <button onclick="clearSignature()">Clear</button>
+        <button onclick="convertToImage()">Convert to Image</button>
+        <button onclick="saveAsPDF()">Save as PDF</button>
+    </div>
+
+    <img id="result-image" alt="Result Image">
+    <canvas id="saved-image"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@1.5.3/signature_pad.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('signature-pad');
+            const signaturePad = new SignaturePad(canvas);
+            const resultImage = document.getElementById('result-image');
+            const savedImageCanvas = document.getElementById('saved-image');
+            const savedImageCtx = savedImageCanvas.getContext('2d');
+            const imageUpload = document.getElementById('image-upload');
+            let isDrawing = false;
+
+            function startDrawing(e) {
+                isDrawing = true;
+                signaturePad.on();
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                signaturePad.off();
+            }
+
+            function handleImageUpload() {
+                const file = imageUpload.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const img = new Image();
+                        img.onload = function () {
+                            signaturePad.clear();
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+
+                            const aspectRatio = img.width / img.height;
+
+                            if (img.width > img.height) {
+                                img.width = canvas.width;
+                                img.height = canvas.width / aspectRatio;
+                            } else {
+                                img.height = canvas.height;
+                                img.width = canvas.height * aspectRatio;
+                            }
+
+                            signaturePad.fromDataURL(e.target.result);
+                        };
+                        img.src = e.target.result;
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            window.showSignature = function () {
+                resultImage.src = signaturePad.toDataURL();
+                resultImage.style.display = 'block';
+
+                // Save the signature image to another canvas
+                savedImageCanvas.width = canvas.width;
+                savedImageCanvas.height = canvas.height;
+                savedImageCtx.drawImage(canvas, 0, 0);
+            };
+
+            window.clearSignature = function () {
+                signaturePad.clear();
+                resultImage.style.display = 'none';
+            };
+
+            window.convertToImage = function () {
+                const compositeCanvas = document.createElement('canvas');
+                const compositeCtx = compositeCanvas.getContext('2d');
+
+                // Set the dimensions of the composite canvas
+                compositeCanvas.width = canvas.width;
+                compositeCanvas.height = canvas.height;
+
+                // Draw the user-uploaded image
+                compositeCtx.drawImage(resultImage, 0, 0);
+
+                // Draw the signature on top of the image
+                compositeCtx.drawImage(canvas, 0, 0);
+
+                // Display the composite image
+                resultImage.src = compositeCanvas.toDataURL();
+                resultImage.style.display = 'block';
+            };
+
+            window.saveAsPDF = function () {
+                const pdfCanvas = document.createElement('canvas');
+                pdfCanvas.width = savedImageCanvas.width;
+                pdfCanvas.height = savedImageCanvas.height;
+                const pdfCtx = pdfCanvas.getContext('2d');
+                pdfCtx.drawImage(savedImageCanvas, 0, 0);
+
+                const pdfOptions = {
+                    margin: 10,
+                    filename: 'signature.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                html2pdf(pdfCanvas, pdfOptions);
+            };
+
+            imageUpload.addEventListener('change', handleImageUpload);
+        });
+    </script>
+</body>
+
+</html>
+<!-- draw on image and download in pdf end -->
+
+<!-- draw on image from user image from path start -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Pad</title>
+    <style>
+        #signature-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        #signature-pad {
+            border: 1px solid #ccc;
+            cursor: crosshair;
+        }
+
+        #user-image {
+            max-width: 100%;
+            max-height: 300px;
+        }
+
+        #saved-image {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            border: 1px solid #ccc;
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/signature_pad@1.5.3/signature-pad.css">
+</head>
+
+<body>
+    <h2>Signature Pad</h2>
+    <div id="signature-container">
+        <!-- <input type="file" id="image-upload" accept="image/*"> -->
+        <img id="user-image" src="4.jpg" alt="User Image">
+        <canvas id="signature-pad"></canvas>
+        <button onclick="showSignature()">Show Signature</button>
+        <button onclick="clearSignature()">Clear</button>
+        <button onclick="convertToImage()">Convert to Image</button>
+        <button onclick="saveAsImage()">Save as Image</button>
+    </div>
+
+    <canvas id="saved-image"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@1.5.3/signature_pad.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('signature-pad');
+            const signaturePad = new SignaturePad(canvas);
+            const savedImageCanvas = document.getElementById('saved-image');
+            const savedImageCtx = savedImageCanvas.getContext('2d');
+            // const imageUpload = document.getElementById('image-upload');
+            const userImage = document.getElementById('user-image');
+            let isDrawing = false;
+
+            function startDrawing(e) {
+                isDrawing = true;
+                signaturePad.on();
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                signaturePad.off();
+            }
+
+            // function handleImageUpload() {
+            //     const file = imageUpload.files[0];
+
+            //     if (file) {
+            //         const reader = new FileReader();
+
+            //         reader.onload = function (e) {
+            //             userImage.src = e.target.result;
+            //         };
+
+            //         reader.readAsDataURL(file);
+            //     }
+            // }
+
+            function drawSignatureOnImage() {
+                savedImageCtx.clearRect(0, 0, savedImageCanvas.width, savedImageCanvas.height);
+
+                // Draw the user-uploaded image
+                savedImageCtx.drawImage(userImage, 0, 0, savedImageCanvas.width, savedImageCanvas.height);
+
+                // Draw the signature on top of the image
+                savedImageCtx.globalAlpha = 1;
+                savedImageCtx.drawImage(canvas, 0, 0, savedImageCanvas.width, savedImageCanvas.height);
+
+                savedImageCtx.globalAlpha = 1;
+            }
+
+            window.showSignature = function () {
+                drawSignatureOnImage();
+            };
+
+            window.clearSignature = function () {
+                signaturePad.clear();
+            };
+
+            window.convertToImage = function () {
+                drawSignatureOnImage();
+            };
+
+            // imageUpload.addEventListener('change', handleImageUpload);
+        });
+    </script>
+</body>
+
+</html>
+<!-- draw on image from user image from path end -->

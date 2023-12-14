@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\vehicleApiController;
+use App\Http\Controllers\api\brandingApiController;
 use App\Http\Controllers\api\wizUsersApiController;
 use App\Http\Controllers\api\realEstateApiController;
 use App\Http\Controllers\api\electronicsApiController;
@@ -32,6 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/getdocs', [allStampDocsApiController::class , 'getDocF']);
 Route::get('/users', [wizUsersApiController::class , 'getWizUsersApiF']);
 // Route::get('/account', [wizUsersApiController::class , 'getaccountdetails']);
+Route::get('/branding', [brandingApiController::class , 'getBrandingF']);
 
 // => post Api
 Route::post('/addDocs', [allStampDocsApiController::class , 'AddDocF']);
@@ -39,6 +41,8 @@ Route::post('/login', [wizUsersApiController::class , 'loginWizUsersApiF']);
 Route::post('/signup', [wizUsersApiController::class , 'SignUpWizUsersApiF']);
 Route::post('/reset', [wizUsersApiController::class , 'ResetPasswordF']);
 Route::post('/updateprofile', [wizUsersApiController::class , 'updateProfileApiF']);
+Route::post('/addbranding', [brandingApiController::class , 'addBrandingF']);
+Route::post('/updatebranding', [brandingApiController::class , 'updateBrandingF']);
 // Route::post('/addelectronics', [electronicsApiController::class , 'addElectronicsF']);
 
 
